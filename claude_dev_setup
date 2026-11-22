@@ -1,8 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+if [ "$#" -eq 0 ]; then
+  echo "usage: claude_dev_setup <script>..." >&2
+  exit 64
+fi
+
 base_url="${CLAUDE_CLOUD_SETUP_URL:-https://raw.githubusercontent.com/zachahn/claude-cloud-setup/main}"
 
-for script in rv fnm postgres; do
+for script in "$@"; do
   curl -fsSL "$base_url/$script.sh" | bash
 done
