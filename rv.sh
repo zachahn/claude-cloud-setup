@@ -7,7 +7,10 @@ rv_install_dir="${XDG_BIN_HOME:-$HOME/.local/bin}"
 ln -sf "$rv_install_dir/rv" /usr/local/bin/rv
 ln -sf "$rv_install_dir/rvx" /usr/local/bin/rvx
 
-rv ruby install
+# Ruby to preinstall. rv can only resolve an exact version here: listing
+# rubies needs api.github.com, which cloud sandboxes block. Keep in sync with
+# the .ruby-version of the apps you work on, or override with RUBY_VERSION.
+rv ruby install "${RUBY_VERSION:-4.0.10}"
 
 eval "$(rv shell env bash)"
 for ruby_executable in "$RUBY_ROOT"/bin/*; do
